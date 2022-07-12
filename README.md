@@ -31,7 +31,7 @@ from contracts.libraries.square_grid import grid_access, Grid
 ```
 instead of 
 ```cairo
-from contracts.libraries.square_grid_old import grid_access, Grid
+from contracts.libraries.square_grid_old import grid_access_old, Grid
 ```
 
 but i can't get out of it and I'm despereately stuck . 
