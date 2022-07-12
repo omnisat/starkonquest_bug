@@ -8,7 +8,7 @@ nile install
 ```
 
 Trying to know why  
-`protostar contracts/ships/basic_ship/test_basic_ship.cairo` 
+`protostar test contracts/ships/basic_ship/test_basic_ship.cairo` 
 
 gives :
 ```
@@ -21,7 +21,7 @@ func test_no_move_if_no_dust{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 
 and why 
 
-`protostar contracts/ships/basic_ship/test_basic_ship_old.cairo` 
+`protostar test contracts/ships/basic_ship/test_basic_ship_old.cairo` 
 
 works as expected. 
 
