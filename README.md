@@ -7,7 +7,7 @@ pip install -r requirements.txt
 nile install
 ```
 
-Trying to know why  
+I'm trying to understand why  
 `protostar test contracts/ships/basic_ship/test_basic_ship.cairo` 
 
 gives :
