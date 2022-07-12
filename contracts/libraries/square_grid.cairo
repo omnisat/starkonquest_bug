@@ -44,26 +44,18 @@ namespace grid_access:
         assert grid.cell_count = width * width
 
         let (local empty_cell) = cell_access.create()
-        # let empty_cell_felt_ptr = cast(&empty_cell, felt)
         let (__fp__, _) = get_fp_and_pc()
-
-        # FIRST DICT
 
         let (local my_dict_start) = default_dict_new(default_value=0)
         let my_dict = my_dict_start
-        # dict_write{dict_ptr=my_dict}(key=0, new_value=cast(&empty_cell, felt))
 
         let (finalized_dict_start, finalized_dict_end) = default_dict_finalize(
             my_dict_start, my_dict, 0
         )
-        # let (sq_dict_start, sq_dict_end) = dict_squash(my_dict_start, my_dict)
-
-        # ALLOC
 
         assert grid.cells_start = my_dict  # finalized_dict_start
         assert grid.cells_end = my_dict + grid.cell_count * DictAccess.SIZE
         with grid:
-            # %{ print(f"Before init loop current start/end cell address : {ids.grid.current_cells_start.address_}/{ids.grid.current_cells_end.address_}") %}
             internal.init_cells_loop(grid.cells_start, 0, &empty_cell)
         end
 
@@ -81,13 +73,7 @@ namespace grid_access:
         let (index) = internal.to_grid_index(x, y)
 
         let current_cells_dict_end_ptr = grid.cells_end
-
-        # %{ print(f"current_cells_dict_end_ptr before read {ids.current_cells_dict_end_ptr.address_}") %}
-
-        # %{ print(f"looking for index {ids.index}") %}
-
         let (local val : Cell*) = dict_read{dict_ptr=current_cells_dict_end_ptr}(key=index)
-        # %{ print(f"current_cells_dict_end_ptr after read {ids.current_cells_dict_end_ptr.address_}") %}
         local new_grid : Grid
         new_grid.width = grid.width
         new_grid.cell_count = grid.cell_count
@@ -103,12 +89,7 @@ namespace grid_access:
 
         let current_cells_dict_end_ptr = grid.cells_end
 
-        # %{ print(f"current_cells_dict_end_ptr before read {ids.current_cells_dict_end_ptr.address_}") %}
-
-        # %{ print(f"looking for index {ids.index}") %}
-
         let (local val : Cell*) = dict_read{dict_ptr=current_cells_dict_end_ptr}(key=index)
-        # %{ print(f"current_cells_dict_end_ptr after read {ids.current_cells_dict_end_ptr.address_}") %}
         local new_grid : Grid
         new_grid.width = grid.width
         new_grid.cell_count = grid.cell_count
@@ -128,14 +109,12 @@ namespace grid_access:
 
         let (new_cell_index) = internal.to_grid_index(x, y)
         let cells_end_ptr = grid.cells_end
-        # %{ print(f"SETNEXTCELL \n index : {ids.new_cell_index} \t end cell before write : {ids.next_cells_end_ptr.address_} \n ") %}
 
         local new_grid : Grid
         assert new_grid.width = grid.width
         assert new_grid.cell_count = grid.cell_count
         assert new_grid.cells_start = grid.cells_start
         dict_write{dict_ptr=cells_end_ptr}(key=new_cell_index, new_value=cast(&new_cell, felt))
-        # %{ print(f"SETNEXTCELL \n index : {ids.new_cell_index} \t end cell after write : {ids.next_cells_end_ptr.address_} \n ") %}
 
         assert new_grid.cells_end = cells_end_ptr
 
@@ -147,7 +126,6 @@ namespace grid_access:
         alloc_locals
         let (__fp__, _) = get_fp_and_pc()
 
-        # let (local empty_cell) = cell_access.create()
         local new_grid : Grid
         assert new_grid.width = grid.width
         assert new_grid.cell_count = grid.cell_count
@@ -156,12 +134,6 @@ namespace grid_access:
         )
         assert new_grid.cells_start = finalized_dict_start
         assert new_grid.cells_end = finalized_dict_end
-
-        # let (cells : Cell*) = alloc()
-        # assert new_grid.next_cells = cells
-
-        # let (empty_cell) = cell_access.create()
-        # internal.init_cells_loop(new_grid.next_cells, 0, empty_cell)
 
         let grid = new_grid
         return ()
@@ -238,20 +210,10 @@ namespace grid_access:
                 # -1 ?
                 return ()
             end
-            # %{ print(f"index : {ids.index} \n end cell before write : {ids.end_cells.address_} \n ") %}
-            # %{ print(f"cend cell_loop : {ids.next_cells_dict_ptr.address_}") %}
-
             dict_write{dict_ptr=end_cells}(key=index, new_value=cast(init_cell, felt))
-            # %{ print(f"index : {ids.index} \n end cell after write : {ids.end_cells.address_} \n ") %}
 
             local end_cells_ptr : DictAccess* = end_cells
-            # %{ print(f"local end cell_ptr : {ids.end_cells_ptr.address_} \n ") %}
 
-            # let (finalized_dict_start, finalized_dict_end) = default_dict_finalize(
-            #       end_cells_ptr - index * DictAccess.SIZE,
-            #      end_cells_ptr, #+ DictAccess.SIZE,
-            #     cast(init_cell, felt),
-            # )
             init_cells_loop(end_cells, index + 1, init_cell)
             return ()
         end
