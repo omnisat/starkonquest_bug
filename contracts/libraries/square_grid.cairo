@@ -3,7 +3,7 @@
 
 from starkware.cairo.common.default_dict import default_dict_new, default_dict_finalize
 from starkware.cairo.common.dict_access import DictAccess
-from starkware.cairo.common.dict import dict_write, dict_update, dict_read, dict_squash, dict_new
+from starkware.cairo.common.dict import dict_write, dict_read
 from starkware.cairo.common.registers import get_fp_and_pc
 
 from starkware.cairo.common.serialize import serialize_word
