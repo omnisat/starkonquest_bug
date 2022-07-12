@@ -38,3 +38,7 @@ from contracts.libraries.square_grid_old import grid_access_old, Grid
 (in contracts/ships/basic_ship/test_basic_ship_old.cairo)
 
 but i can't get out of it and I'm despereately stuck . 
+
+
+
+EDIT : Solution was to remove builtins range check in square_grid.cairo :)
