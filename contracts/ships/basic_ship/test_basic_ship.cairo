@@ -29,7 +29,7 @@ func test_no_move_if_no_dust{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
     with grid:
         grid_helper.dict_to_array(cell_array, 0)
     end
-    # BasicShip.move(grid.cell_count, grid.current_cells, 1)
+
     BasicShip.move(grid.cell_count, cell_array, 1)
 
     return ()

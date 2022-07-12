@@ -27,6 +27,5 @@ func test_no_move_if_no_dust{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, r
 
     BasicShip.move(grid.cell_count, grid.current_cells, 1)
 
-
     return ()
 end
